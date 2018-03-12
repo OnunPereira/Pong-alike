@@ -53,7 +53,7 @@ window.onload = function() {
 
     canvas.addEventListener('mousedown', handleMouseClick);
 
-    canvas.addEventListener('mousemove', function(evt) {
+    window.addEventListener('mousemove', function(evt) {
         var mousePos = calculateMousePos(evt);
         player1.paddle.y = mousePos.y - PADDLE_HEIGHT/2;
     });
@@ -72,8 +72,11 @@ function calculateMousePos(evt) {
 
 function handleMouseClick(evt) {
     if (showWinScreen) {
-        showRoundScreen = false;
+        player1.score = 0;
+        player2.score = 0;
         showWinScreen = false;
+    } else if (showRoundScreen) { 
+        showRoundScreen = false;
     }
 }
 
@@ -101,7 +104,7 @@ function computerMovement() {
 
 function moveEverything() {
 
-    if (showWinScreen) {
+    if (showWinScreen || showRoundScreen) {
         return;
     }
 
@@ -164,21 +167,27 @@ function drawEverything() {
         canvasContext.fillStyle = 'white';
 
         if (player1.score >= WINNING_SCORE) {
-            canvasContext.fillText("Left player won", 350, 200);
+            canvasContext.fillText("Left player won the game!", 350, 200);
         } else if (player2.score >= WINNING_SCORE) {
-            canvasContext.fillText("Right player won", 350, 200);
+            canvasContext.fillText("Right player won the game!", 350, 200);
         }
+        canvasContext.fillText("Click to restart", 350, 500);
+        return;
+
+    } else if (showRoundScreen) {
+
+        canvasContext.fillStyle = 'white';
         canvasContext.fillText("Click to continue", 350, 500);
         return;
     }
 
-    // This is dashed line
+    // Draw dashed line
     drawNet();
-    // This is player paddle
+    // Draw player paddle
     player1.paddle.draw();
-    // This is cpu paddle
+    // Draw cpu paddle
     player2.paddle.draw();
-    // This is ball
+    // Draw ball
     ball.draw();
 
     canvasContext.fillText(player1.score, 100, 100);
