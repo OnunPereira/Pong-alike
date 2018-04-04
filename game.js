@@ -1,19 +1,19 @@
-var canvas = document.getElementById("gameCanvas");
-var canvasContext = canvas.getContext('2d');
+const canvas = document.getElementById("gameCanvas");
+const canvasContext = canvas.getContext('2d');
 
 resetFont();
 
 const WINNING_SCORE = 3;
 
-var showMainMenu = true;
-var showRoundScreen = false;
-var showWinScreen = false;
+let showMainMenu = true;
+let showRoundScreen = false;
+let showWinScreen = false;
 
 const PADDLE_HEIGHT = 100;
 const PADDLE_THICKNESS = 10;
 const PADDLE_DISTANCE = 5;
 
-var ball = {
+const ball = {
     x: 50,
     y: 50,
     speedX: 10,
@@ -24,7 +24,7 @@ var ball = {
     }
 }
 
-var player1 = {
+const player1 = {
     score: 0,
     paddle: {
         x: PADDLE_DISTANCE,
@@ -35,7 +35,7 @@ var player1 = {
     }
 }
 
-var player2 = {
+const player2 = {
     score: 0,
     paddle: {
         x: canvas.width - PADDLE_DISTANCE - PADDLE_THICKNESS,
@@ -57,16 +57,16 @@ window.onload = function () {
     canvas.addEventListener('mousedown', handleMouseClick);
 
     window.addEventListener('mousemove', function (evt) {
-        var mousePos = calculateMousePos(evt);
+        const mousePos = calculateMousePos(evt);
         player1.paddle.y = mousePos.y - PADDLE_HEIGHT / 2;
     });
 }
 
 function calculateMousePos(evt) {
-    var rect = canvas.getBoundingClientRect();
-    var root = document.documentElement;
-    var mouseX = evt.clientX - rect.left - root.scrollLeft;
-    var mouseY = evt.clientY - rect.top - root.scrollTop;
+    const rect = canvas.getBoundingClientRect();
+    const root = document.documentElement;
+    let mouseX = evt.clientX - rect.left - root.scrollLeft;
+    let mouseY = evt.clientY - rect.top - root.scrollTop;
     if (mouseY < PADDLE_HEIGHT/2) {
         mouseY = PADDLE_HEIGHT/2;
     } else if (mouseY > canvas.height - PADDLE_HEIGHT/2) {
@@ -107,8 +107,8 @@ function ballReset() {
 function computerMovement() {
 
     const CPU_SPEED = 9;
+    const paddle2YCenter = player2.paddle.y + (PADDLE_HEIGHT / 2);
 
-    var paddle2YCenter = player2.paddle.y + (PADDLE_HEIGHT / 2);
     if (paddle2YCenter < ball.y - 30) {
         player2.paddle.y = player2.paddle.y + CPU_SPEED + PADDLE_HEIGHT > canvas.height ?
             player2.paddle.y :
@@ -138,7 +138,7 @@ function moveEverything() {
 
         ball.speedX = -ball.speedX;
 
-        var deltaY = ball.y - (player1.paddle.y + PADDLE_HEIGHT / 2);
+        let deltaY = ball.y - (player1.paddle.y + PADDLE_HEIGHT / 2);
         ball.speedY = deltaY / 4;
     }
 
@@ -149,7 +149,7 @@ function moveEverything() {
 
         ball.speedX = -ball.speedX;
 
-        var deltaY = ball.y - (player2.paddle.y + PADDLE_HEIGHT / 2);
+        let deltaY = ball.y - (player2.paddle.y + PADDLE_HEIGHT / 2);
         ball.speedY = deltaY / 4;
     }
 
@@ -170,7 +170,7 @@ function moveEverything() {
 }
 
 function drawNet() {
-    for (var i = 0; i < canvas.height; i += 40) {
+    for (let i = 0; i < canvas.height; i += 40) {
         colorRect(canvas.width / 2 - 1, i, 2, 20, 'white');
     }
 }
