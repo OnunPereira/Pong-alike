@@ -136,6 +136,8 @@ function moveEverything() {
         ball.y > player1.paddle.y - ball.radius &&
         ball.y < player1.paddle.y + PADDLE_HEIGHT + ball.radius) {
 
+        ball.x = PADDLE_THICKNESS + ball.radius;
+
         ball.speedX = -ball.speedX;
 
         let deltaY = ball.y - (player1.paddle.y + PADDLE_HEIGHT / 2);
@@ -146,6 +148,8 @@ function moveEverything() {
     if (ball.x > canvas.width - (PADDLE_DISTANCE + PADDLE_THICKNESS + ball.radius) &&
         ball.y > player2.paddle.y - ball.radius &&
         ball.y < player2.paddle.y + PADDLE_HEIGHT + ball.radius) {
+
+        ball.x = canvas.width - PADDLE_THICKNESS - ball.radius;
 
         ball.speedX = -ball.speedX;
 
